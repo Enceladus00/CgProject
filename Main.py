@@ -4,24 +4,24 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 import numpy as np
 
-# Işıklandırma pozisyon/yönü 
+# Işıklandırma pozisyon/yönü / Lighting position/direction 
 ambient_light_pos = [0.0, 5.0, 0.0, 1.0]
 point_light_pos = [2.0, 3.0, -1.0, 1.5]
 directional_light_dir = [0.0, 1.0, 0.0, 0.0]
 
-# Kamera hareketi ve bakış yönü
+
 camera_pos = [-1.0, 0.5, 2.0] 
 camera_rot = [0.0, 0.0]  
 mouse_sensitivity = 0.1
 movement_speed = 0.1
 
-# Işıklandırma
+
 def setup_lighting():
     
     glShadeModel(GL_SMOOTH)
     glEnable(GL_LIGHTING)
-    # Sırasıyla Ortam(Ambient), Nokta(Point) ve Yönlü(Directional) Işık.
-    # Aktive/deaktive etmek için line'ı # ile yorum satırı haline getirin.
+    # Sırasıyla Ortam(Ambient), Nokta(Point) ve Yönlü(Directional) Işık./Ambient, Point and Directional Light respectively.
+    # Aktive/deaktive etmek için line'ı # ile yorum satırı haline getirin./Turn the line into a comment line with # to activate/deactivate.
     glEnable(GL_LIGHT0) 
     glEnable(GL_LIGHT1)
     glEnable(GL_LIGHT2)
@@ -82,7 +82,7 @@ def draw_cube():
     subdivisions = 16
     step = 1.0 / subdivisions
     half_size = 0.5
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, 25) #Parlak Yüzey
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, 25) #Parlak Yüzey/ Shiny Surface
     faces = [
         {'normal': (0, 0, 1), 'start': (-half_size, -half_size, half_size), 'u': (1, 0, 0), 'v': (0, 1, 0)},
         {'normal': (0, 0, -1), 'start': (half_size, -half_size, -half_size), 'u': (-1, 0, 0), 'v': (0, 1, 0)},
@@ -198,7 +198,7 @@ def draw_pyramid():
     mat_ambient = [0.7, 0.7, 0.7, 1.0]
     mat_diffuse = [0.8, 0.8, 0.8, 1.0]
     mat_specular = [0.0, 0.0, 0.0, 1.0]
-    mat_shininess = [0.0]                   #mat yüzey 
+    mat_shininess = [0.0]                   #mat yüzey/Matte surface
 
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient)
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse)
@@ -213,18 +213,18 @@ def draw_pyramid():
 
 
 
-# Kamera hareketini uygulama
+# Camera movement
 def handle_input():
     global camera_pos, camera_rot
 
     keys = pygame.key.get_pressed()
     mouse_movement = pygame.mouse.get_rel()
 
-    # Fare hareketi ile bakış yönünü değiştir
+    
     camera_rot[0] -= mouse_movement[1] * mouse_sensitivity  # X rotasyonu
     camera_rot[1] -= mouse_movement[0] * mouse_sensitivity  # Y rotasyonu
 
-    # Kamera hareketi (WASD veya ok tuşları)
+    #(WASD or arrow keys)
     direction = np.array([
         np.sin(np.radians(camera_rot[1])),
         0,
@@ -251,13 +251,13 @@ def handle_input():
         pygame.quit()
         quit()
 
-# Kamera bakışını güncelle
+
 def update_camera():
     glRotatef(-camera_rot[0], 1, 0, 0) 
     glRotatef(-camera_rot[1], 0, 1, 0)
     glTranslatef(-camera_pos[0], -camera_pos[1], -camera_pos[2]) 
 
-# Sahne oluşturma
+
 def draw_scene():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glPushMatrix()
